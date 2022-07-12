@@ -3,7 +3,6 @@ version: "3.9"
 volumes:
   mariadb:
   nextcloud:
-  haproxy:
   
 services:
   mariadb:
@@ -38,13 +37,18 @@ services:
 
   haproxy:
     image: haproxy:2.6
+    configs:
+      - source: haproxyconf
+        target: /usr/local/etc/haproxy/haproxy.cfg
     restart: always
     ports:
       - 8080:80
     networks:
       - frontend
-    volumes:
-      - haproxy:/etc/haproxy
+   
+configs:
+  haproxyconf:
+    file: ./haproxy/haproxy.cfg
 
 networks:
   frontend:
