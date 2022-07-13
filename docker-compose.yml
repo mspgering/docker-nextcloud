@@ -22,8 +22,8 @@ services:
   nextcloud:
     image: nextcloud:24.0-apache
     restart: always
-    #    ports:
-      #  - 8080:80
+#   ports:
+#      - 8080:80
     volumes:
       - nextcloud:/var/www/html
     environment:
@@ -42,7 +42,7 @@ services:
         target: /usr/local/etc/haproxy/haproxy.cfg
     restart: always
     ports:
-      - 8080:80
+      - 80:80
     networks:
       - frontend
    
