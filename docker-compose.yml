@@ -47,8 +47,6 @@ services:
     networks:
       - frontend
  
-        #env_file: .env
-
 configs:
   haproxyconf:
     file: ./haproxy/haproxy.cfg
