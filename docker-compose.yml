@@ -6,6 +6,7 @@ volumes:
   
 services:
   mariadb:
+    container_name: mariadb
     image: mariadb:10.8-jammy
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -20,6 +21,7 @@ services:
       - backend
 
   nextcloud:
+    container_name: nextcloud
     image: nextcloud:24.0-apache
     restart: always
     volumes:
@@ -37,6 +39,7 @@ services:
       - haproxy
 
   haproxy:
+    container_name: haproxy
     image: haproxy:2.6
     configs:
       - source: haproxyconf
