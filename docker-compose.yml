@@ -12,28 +12,29 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_PASSWORD=nextcloud
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
     networks:
       - backend
 
   nextcloud:
     image: nextcloud:24.0-apache
     restart: always
-#   ports:
-#      - 8080:80
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - MYSQL_PASSWORD=nextcloud
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_HOST
     networks:
       - frontend
       - backend
+    depends_on:
+      - mariadb
+      - haproxy
 
   haproxy:
     image: haproxy:2.6
@@ -45,7 +46,9 @@ services:
       - 80:80
     networks:
       - frontend
-   
+ 
+        #env_file: .env
+
 configs:
   haproxyconf:
     file: ./haproxy/haproxy.cfg
